@@ -1,0 +1,14 @@
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
+import { User } from './user.entity';
+
+@Entity()
+export class Role {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ unique: true })
+  name: string; // Например: 'admin', 'user', 'moderator'
+
+  @ManyToMany(() => User, (user) => user.roles)
+  users: User[];
+}
