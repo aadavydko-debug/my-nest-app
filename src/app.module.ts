@@ -12,13 +12,16 @@ import { Role } from './tasks/entities/role.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'secret',
-      database: 'nestjs_db',
+      host: process.env.DB_HOST || 'localhost',
+      port: parseInt(process.env.DB_PORT) || 5432,
+      username: process.env.DB_USERNAME || 'postgres',
+      password: process.env.DB_PASSWORD || 'secret',
+      database: process.env.DB_DATABASE || 'nestjs_db',
       entities: [Task, User, Role],
       synchronize: true,
+      // ⚠️ ВАЖНО: не блокировать запуск при ошибке подключения
+      retryAttempts: 0,
+      retryDelay: 0,
     }),
     TasksModule,
     AuthModule,

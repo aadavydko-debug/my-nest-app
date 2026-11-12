@@ -3,8 +3,6 @@ name: CI/CD Pipeline
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build-and-deploy:
@@ -42,5 +40,4 @@ jobs:
         run: docker push ${{ secrets.DOCKER_USERNAME }}/my-nest-app:latest
       
       - name: Deploy to Render
-        run: |
-          curl -X POST ${{ secrets.RENDER_DEPLOY_WEBHOOK_URL }}
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_WEBHOOK_URL }}
